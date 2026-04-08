@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sidebar"
 import { LayoutDashboardIcon, ExternalLink } from "lucide-react"
 import { NavLink } from "react-router"
-import Icon from "@/assets/icon.svg"
 
 const data = {
   navMain: [
@@ -46,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <NavLink to="/">
                 <img
                   className="size-5! rounded-sm"
-                  src={Icon}
+                  src="/icon.svg"
                   alt="DMARC Analyser Logo"
                 />
                 <span className="text-base font-semibold">DMARC Analyser</span>
