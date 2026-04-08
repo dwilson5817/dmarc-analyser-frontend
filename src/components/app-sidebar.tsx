@@ -12,10 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {
-  LayoutDashboardIcon,
-  ExternalLink,
-} from "lucide-react"
+import { LayoutDashboardIcon, ExternalLink } from "lucide-react"
 import { NavLink } from "react-router"
 import Icon from "@/assets/icon.svg"
 

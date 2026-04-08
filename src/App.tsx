@@ -9,6 +9,9 @@ import PublicRoute from "./components/public-route"
 import AuthLayout from "./components/layouts/auth-layout"
 import CallbackPage from "./components/pages/callback-page"
 import LoginPage from "./components/pages/login-page"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 export function App() {
   return (
@@ -18,26 +21,28 @@ export function App() {
       redirect_uri={window.location.origin + "/auth/callback"}
       scope="openid profile email"
     >
-      <ThemeProvider>
-        <TooltipProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<ProtectedRoute />}>
-                <Route element={<AppLayout />}>
-                  <Route index element={<HomePage />} />
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <TooltipProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route element={<ProtectedRoute />}>
+                  <Route element={<AppLayout />}>
+                    <Route index element={<HomePage />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route element={<PublicRoute />}>
-                <Route path="auth" element={<AuthLayout />}>
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="callback" element={<CallbackPage />} />
+                <Route element={<PublicRoute />}>
+                  <Route path="auth" element={<AuthLayout />}>
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="callback" element={<CallbackPage />} />
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </ThemeProvider>
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </AuthProvider>
   )
 }
