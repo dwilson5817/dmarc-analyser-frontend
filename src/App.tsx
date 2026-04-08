@@ -1,20 +1,44 @@
-import { Button } from "@/components/ui/button"
+import { AuthProvider } from "react-oidc-context"
+import { ThemeProvider } from "./components/theme-provider"
+import { TooltipProvider } from "./components/ui/tooltip"
+import { BrowserRouter, Route, Routes } from "react-router"
+import ProtectedRoute from "./components/protected-route"
+import { AppLayout } from "./components/layouts/app-layout"
+import HomePage from "./components/pages/home-page"
+import PublicRoute from "./components/public-route"
+import AuthLayout from "./components/layouts/auth-layout"
+import CallbackPage from "./components/pages/callback-page"
+import LoginPage from "./components/pages/login-page"
 
 export function App() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+    <AuthProvider
+      authority={import.meta.env.VITE_AUTH_AUTHORITY}
+      client_id={import.meta.env.VITE_AUTH_CLIENT_ID}
+      redirect_uri={window.location.origin + "/auth/callback"}
+      scope="openid profile email"
+    >
+      <ThemeProvider>
+        <TooltipProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<ProtectedRoute />}>
+                <Route element={<AppLayout />}>
+                  <Route index element={<HomePage />} />
+                </Route>
+              </Route>
+
+              <Route element={<PublicRoute />}>
+                <Route path="auth" element={<AuthLayout />}>
+                  <Route path="login" element={<LoginPage />} />
+                  <Route path="callback" element={<CallbackPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
