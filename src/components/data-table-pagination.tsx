@@ -1,4 +1,3 @@
-import { type Table } from "@tanstack/react-table"
 import {
   ChevronLeft,
   ChevronRight,
@@ -7,13 +6,21 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>
+interface PaginationModel {
+  getState(): { pagination: { pageIndex: number } }
+  getPageCount(): number
+  setPageIndex(index: number): void
+  getCanPreviousPage(): boolean
+  getCanNextPage(): boolean
+  previousPage(): void
+  nextPage(): void
 }
 
-export function DataTablePagination<TData>({
-  table,
-}: DataTablePaginationProps<TData>) {
+interface DataTablePaginationProps {
+  table: PaginationModel
+}
+
+export function DataTablePagination({ table }: DataTablePaginationProps) {
   return (
     <div className="flex items-center justify-end gap-2 px-2 py-3">
       <span className="text-sm text-muted-foreground">

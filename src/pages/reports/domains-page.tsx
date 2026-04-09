@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useGetDomains } from "@/hooks/use-get-domains.ts"
 import DomainRow from "@/pages/reports/domain-row.tsx"
 import { DataTablePagination } from "@/components/data-table-pagination.tsx"
@@ -8,33 +9,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table.tsx"
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
 
 const PAGE_SIZE = 10
 
-const columnHelper = createColumnHelper<string>()
-const columns = [columnHelper.display({ id: "row" })]
-
 const DomainsPage = () => {
   const { data, isLoading } = useGetDomains()
+  const [pageIndex, setPageIndex] = useState(0)
+
   const domains: string[] = isLoading
     ? Array.from({ length: PAGE_SIZE }, () => "")
     : (data?.domains ?? [])
 
-  const table = useReactTable({
-    data: domains,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: PAGE_SIZE } },
-  })
+  const pageCount = Math.ceil(domains.length / PAGE_SIZE)
+  const visibleDomains = domains.slice(
+    pageIndex * PAGE_SIZE,
+    (pageIndex + 1) * PAGE_SIZE
+  )
 
-  const visibleDomains = table.getRowModel().rows.map((r) => r.original)
+  const pagination = {
+    getState: () => ({ pagination: { pageIndex } }),
+    getPageCount: () => pageCount,
+    setPageIndex,
+    getCanPreviousPage: () => pageIndex > 0,
+    getCanNextPage: () => pageIndex < pageCount - 1,
+    previousPage: () => setPageIndex(pageIndex - 1),
+    nextPage: () => setPageIndex(pageIndex + 1),
+  }
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -66,7 +66,7 @@ const DomainsPage = () => {
           </TableBody>
         </Table>
       </div>
-      {table.getPageCount() > 1 && <DataTablePagination table={table} />}
+      {pageCount > 1 && <DataTablePagination table={pagination} />}
     </div>
   )
 }
