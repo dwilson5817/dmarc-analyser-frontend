@@ -1,7 +1,7 @@
 import { AuthProvider } from "react-oidc-context"
 import { ThemeProvider } from "./components/theme-provider"
 import { TooltipProvider } from "./components/ui/tooltip"
-import { BrowserRouter, Route, Routes } from "react-router"
+import { createBrowserRouter, RouterProvider } from "react-router"
 import ProtectedRoute from "./components/protected-route"
 import { AppLayout } from "./components/layouts/app-layout"
 import HomePage from "./pages/home-page"
@@ -10,8 +10,77 @@ import AuthLayout from "./components/layouts/auth-layout"
 import CallbackPage from "./pages/callback-page"
 import LoginPage from "./pages/login-page"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import ReportsPage from "@/pages/reports-page.tsx"
+import ReportPage from "@/pages/report-page.tsx"
+import DomainsPage from "@/pages/domains-page.tsx"
 
 const queryClient = new QueryClient()
+
+const router = createBrowserRouter([
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <AppLayout />,
+        handle: {
+          crumb: () => ({ label: "Home", to: "/" }),
+        },
+        children: [
+          {
+            index: true,
+            element: <HomePage />,
+          },
+          {
+            path: "reports",
+            handle: {
+              crumb: () => ({ label: "Reports", to: "/reports" }),
+            },
+            children: [
+              { index: true, element: <DomainsPage /> },
+              {
+                path: ":domain",
+                handle: {
+                  crumb: (match: { params: { domain: string } }) => ({
+                    label: match.params.domain,
+                    to: `/reports/${match.params.domain}`,
+                  }),
+                },
+                children: [
+                  { index: true, element: <ReportsPage /> },
+                  {
+                    path: ":report",
+                    element: <ReportPage />,
+                    handle: {
+                      crumb: (match: {
+                        params: { domain: string; report: string }
+                      }) => ({
+                        label: match.params.report,
+                        to: `/reports/${match.params.domain}/${match.params.report}`,
+                      }),
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    element: <PublicRoute />,
+    children: [
+      {
+        path: "auth",
+        element: <AuthLayout />,
+        children: [
+          { path: "login", element: <LoginPage /> },
+          { path: "callback", element: <CallbackPage /> },
+        ],
+      },
+    ],
+  },
+])
 
 export function App() {
   return (
@@ -24,22 +93,7 @@ export function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <TooltipProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<ProtectedRoute />}>
-                  <Route element={<AppLayout />}>
-                    <Route index element={<HomePage />} />
-                  </Route>
-                </Route>
-
-                <Route element={<PublicRoute />}>
-                  <Route path="auth" element={<AuthLayout />}>
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="callback" element={<CallbackPage />} />
-                  </Route>
-                </Route>
-              </Routes>
-            </BrowserRouter>
+            <RouterProvider router={router} />
           </TooltipProvider>
         </ThemeProvider>
       </QueryClientProvider>
