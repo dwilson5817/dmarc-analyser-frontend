@@ -12,6 +12,7 @@ import {
 import { ArrowRight, FileText, CalendarDays, ShieldCheck } from "lucide-react"
 import { PolicyBadge } from "@/components/policy-badge.tsx"
 import { StatCard } from "@/components/stat-card.tsx"
+import { formatDate } from "@/lib/format.ts"
 
 type Report = {
   report_id: string
@@ -24,14 +25,6 @@ type Report = {
   aspf: "r" | "s"
   subdomain_policy: "reject" | "quarantine" | "none" | null
   pct: number
-}
-
-function formatDate(timestamp: number) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(timestamp * 1000))
 }
 
 function timeAgo(timestamp: number) {

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card.tsx"
 import { PolicyBadge } from "@/components/policy-badge.tsx"
 import { StatCard } from "@/components/stat-card.tsx"
+import { formatDate } from "@/lib/format.ts"
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -48,14 +49,6 @@ type DMARCRecord = {
   spf_aligned: "pass" | "fail"
   header_from: string
   auth_results: AuthResult[]
-}
-
-function formatDate(timestamp: number) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(timestamp * 1000))
 }
 
 function alignmentLabel(mode: string) {

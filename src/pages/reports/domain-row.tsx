@@ -1,18 +1,11 @@
 import { useGetReports } from "@/hooks/use-get-reports.ts"
+import { getRelativeDays } from "@/lib/format.ts"
 import { Skeleton } from "@/components/ui/skeleton.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { TableCell, TableRow } from "@/components/ui/table.tsx"
 import { ArrowRight, Globe } from "lucide-react"
 import { Link } from "react-router"
 import { PolicyBadge } from "@/components/policy-badge.tsx"
-
-function getRelativeDays(timestamp: number) {
-  const diffDays = Math.floor((Date.now() - timestamp) / 86_400_000)
-  if (diffDays === 0) return "Today"
-  if (diffDays === 1) return "Yesterday"
-  if (diffDays > 0) return `${diffDays}d ago`
-  return `In ${Math.abs(diffDays)}d`
-}
 
 const DomainRow = ({ domain }: { domain: string | null }) => {
   const { data, isLoading } = useGetReports(domain ?? "", 1)
