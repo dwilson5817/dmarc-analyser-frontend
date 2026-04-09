@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, ExternalLink } from "lucide-react"
+import { LayoutDashboardIcon, ExternalLink, MailSearch } from "lucide-react"
 import { NavLink } from "react-router"
 
 const data = {
@@ -21,6 +21,11 @@ const data = {
       title: "Dashboard",
       url: "/",
       icon: <LayoutDashboardIcon />,
+    },
+    {
+      title: "Reports",
+      url: "/reports",
+      icon: <MailSearch />,
     },
   ],
   navSecondary: [
