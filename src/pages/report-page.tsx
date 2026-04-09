@@ -10,6 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx"
+import { PolicyBadge } from "@/components/policy-badge.tsx"
+import { StatCard } from "@/components/stat-card.tsx"
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -94,53 +96,6 @@ function MetaRow({ label, value }: { label: string; value: React.ReactNode }) {
       <span className="text-sm text-muted-foreground">{label}</span>
       <span className="text-sm font-medium">{value}</span>
     </div>
-  )
-}
-
-function PolicyBadge({ policy }: { policy: string }) {
-  const styles: Record<string, string> = {
-    reject:
-      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-    quarantine:
-      "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-    none: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-  }
-  return (
-    <span
-      className={`rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${styles[policy] ?? ""}`}
-    >
-      {policy}
-    </span>
-  )
-}
-
-function StatCard({
-  label,
-  value,
-  icon,
-  loading,
-}: {
-  label: string
-  value: React.ReactNode
-  icon: React.ReactNode
-  loading: boolean
-}) {
-  return (
-    <Card size="sm">
-      <CardHeader className="flex flex-row items-center justify-between pb-1">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-          {label}
-        </CardTitle>
-        <span className="text-muted-foreground">{icon}</span>
-      </CardHeader>
-      <CardContent>
-        {loading ? (
-          <Skeleton className="h-7 w-20" />
-        ) : (
-          <p className="text-2xl font-bold">{value}</p>
-        )}
-      </CardContent>
-    </Card>
   )
 }
 

@@ -2,13 +2,6 @@ import { useParams, Link } from "react-router"
 import { useGetReports } from "@/hooks/use-get-reports.ts"
 import { DataTable } from "@/components/data-table.tsx"
 import { DataTablePagination } from "@/components/data-table-pagination.tsx"
-import { Skeleton } from "@/components/ui/skeleton.tsx"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import {
   type ColumnDef,
@@ -17,6 +10,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { ArrowRight, FileText, CalendarDays, ShieldCheck } from "lucide-react"
+import { PolicyBadge } from "@/components/policy-badge.tsx"
+import { StatCard } from "@/components/stat-card.tsx"
 
 type Report = {
   report_id: string
@@ -55,53 +50,6 @@ function timeAgo(timestamp: number) {
       return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`
   }
   return "just now"
-}
-
-function PolicyBadge({ policy }: { policy: string }) {
-  const styles: Record<string, string> = {
-    reject:
-      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-    quarantine:
-      "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-    none: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-  }
-  return (
-    <span
-      className={`rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${styles[policy] ?? ""}`}
-    >
-      {policy}
-    </span>
-  )
-}
-
-function StatCard({
-  label,
-  value,
-  icon,
-  loading,
-}: {
-  label: string
-  value: React.ReactNode
-  icon: React.ReactNode
-  loading: boolean
-}) {
-  return (
-    <Card size="sm">
-      <CardHeader className="flex flex-row items-center justify-between pb-1">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-          {label}
-        </CardTitle>
-        <span className="text-muted-foreground">{icon}</span>
-      </CardHeader>
-      <CardContent>
-        {loading ? (
-          <Skeleton className="h-7 w-24" />
-        ) : (
-          <p className="text-2xl font-bold">{value}</p>
-        )}
-      </CardContent>
-    </Card>
-  )
 }
 
 const columns = (domain: string): ColumnDef<Report>[] => [
