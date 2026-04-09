@@ -1,6 +1,6 @@
 import { useGetDomains } from "@/hooks/use-get-domains.ts"
-import DomainRow from "@/pages/domain-row.tsx"
-import { DataTablePagination } from "@/components/data-table-pagination"
+import DomainRow from "@/pages/reports/domain-row.tsx"
+import { DataTablePagination } from "@/components/data-table-pagination.tsx"
 import {
   Table,
   TableBody,

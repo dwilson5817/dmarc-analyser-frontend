@@ -7,12 +7,12 @@ import { AppLayout } from "./components/layouts/app-layout"
 import HomePage from "./pages/home-page"
 import PublicRoute from "./components/public-route"
 import AuthLayout from "./components/layouts/auth-layout"
-import CallbackPage from "./pages/callback-page"
-import LoginPage from "./pages/login-page"
+import CallbackPage from "./pages/auth/callback-page.tsx"
+import LoginPage from "./pages/auth/login-page.tsx"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import ReportsPage from "@/pages/reports-page.tsx"
-import ReportPage from "@/pages/report-page.tsx"
-import DomainsPage from "@/pages/domains-page.tsx"
+import ReportsPage from "@/pages/reports/reports-page.tsx"
+import ReportPage from "@/pages/reports/report-page.tsx"
+import DomainsPage from "@/pages/reports/domains-page.tsx"
 
 const queryClient = new QueryClient()
 
