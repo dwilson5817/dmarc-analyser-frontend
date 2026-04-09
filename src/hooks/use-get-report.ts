@@ -1,21 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import { useAuth } from "react-oidc-context"
+import { useApiClient } from "@/hooks/use-api-client.ts"
 
-export const useGetReport = (domain: string, reportId: string) => {
-  const auth = useAuth()
-
+export function useGetReport(domain: string, reportId: string) {
+  const client = useApiClient()
   return useQuery({
     queryKey: ["Report", domain, reportId],
     queryFn: async () => {
-      const res = await fetch(
-        `https://2lfdv4gtw0.execute-api.eu-west-1.amazonaws.com/prod/domains/${domain}/reports/${reportId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.user?.access_token}`,
-          },
-        }
+      const { data, error } = await client.GET(
+        "/domains/{domain}/reports/{report_id}",
+        { params: { path: { domain, report_id: reportId } } }
       )
-      return res.json()
+      if (error) throw error
+      return data
     },
   })
 }

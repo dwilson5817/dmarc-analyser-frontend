@@ -13,19 +13,9 @@ import { ArrowRight, FileText, CalendarDays, ShieldCheck } from "lucide-react"
 import { PolicyBadge } from "@/components/policy-badge.tsx"
 import { StatCard } from "@/components/stat-card.tsx"
 import { formatDate } from "@/lib/format.ts"
+import type { components } from "@/lib/api.d.ts"
 
-type Report = {
-  report_id: string
-  org_name: string
-  org_email: string
-  begin_date: number
-  end_date: number
-  policy: "reject" | "quarantine" | "none"
-  adkim: "r" | "s"
-  aspf: "r" | "s"
-  subdomain_policy: "reject" | "quarantine" | "none" | null
-  pct: number
-}
+type Report = components["schemas"]["Report"]
 
 function timeAgo(timestamp: number) {
   const seconds = Math.floor(Date.now() / 1000) - timestamp

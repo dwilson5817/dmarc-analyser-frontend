@@ -13,6 +13,7 @@ import {
 import { PolicyBadge } from "@/components/policy-badge.tsx"
 import { StatCard } from "@/components/stat-card.tsx"
 import { formatDate } from "@/lib/format.ts"
+import type { components } from "@/lib/api.d.ts"
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -28,28 +29,7 @@ import {
   ShieldX,
 } from "lucide-react"
 
-type AuthResult = {
-  type: "dkim" | "spf"
-  result:
-    | "pass"
-    | "fail"
-    | "softfail"
-    | "neutral"
-    | "none"
-    | "temperror"
-    | "permerror"
-  domain: string
-}
-
-type DMARCRecord = {
-  source_ip: string
-  count: number
-  disposition: "none" | "quarantine" | "reject"
-  dkim_aligned: "pass" | "fail"
-  spf_aligned: "pass" | "fail"
-  header_from: string
-  auth_results: AuthResult[]
-}
+type DMARCRecord = components["schemas"]["Record"]
 
 function alignmentLabel(mode: string) {
   return mode === "s" ? "Strict" : "Relaxed"
