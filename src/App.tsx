@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import ReportsPage from "@/pages/reports/reports-page.tsx"
 import ReportPage from "@/pages/reports/report-page.tsx"
 import DomainsPage from "@/pages/reports/domains-page.tsx"
+import DashboardPage from "@/pages/dashboard-page.tsx";
 
 const queryClient = new QueryClient()
 
@@ -29,6 +30,13 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <HomePage />,
+          },
+          {
+            path: "dashboard",
+            element: <DashboardPage />,
+            handle: {
+              crumb: () => ({ label: "Dashboard", to: "/dashboard" }),
+            },
           },
           {
             path: "reports",
