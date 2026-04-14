@@ -8,7 +8,9 @@ import { Link } from "react-router"
 import { PolicyBadge } from "@/components/policy-badge.tsx"
 
 const DomainRow = ({ domain }: { domain: string | null }) => {
-  const { data, isLoading } = useGetReports(domain ?? "", 1)
+  const { data, isLoading } = useGetReports(domain ?? "", {
+    limit: 1,
+  })
 
   const latestReport = data?.items?.[0]
   const loading = domain === null || isLoading
