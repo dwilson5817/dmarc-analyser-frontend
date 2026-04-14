@@ -4,23 +4,6 @@
  */
 
 export interface paths {
-  "/ping": {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Ping */
-    get: operations["ping_ping_get"]
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
   "/domains": {
     parameters: {
       query?: never
@@ -125,11 +108,6 @@ export interface components {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][]
     }
-    /** PingResponse */
-    PingResponse: {
-      /** Message */
-      message: string
-    }
     /** Record */
     Record: {
       /** Source Ip */
@@ -222,26 +200,6 @@ export interface components {
 }
 export type $defs = Record<string, never>
 export interface operations {
-  ping_ping_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          "application/json": components["schemas"]["PingResponse"]
-        }
-      }
-    }
-  }
   list_domains_domains_get: {
     parameters: {
       query?: never
@@ -265,8 +223,8 @@ export interface operations {
   list_reports_domains__domain__reports_get: {
     parameters: {
       query?: {
-        from?: number | null
-        to?: number | null
+        from?: string | null
+        to?: string | null
         limit?: number
         cursor?: string | null
       }
