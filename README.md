@@ -1,17 +1,15 @@
-![DMARC Analyser logo](https://gitlab.dylanw.dev/uploads/-/system/group/avatar/14/dmarc-analyser-256px.png?width=128)
+![DMARC Analyser logo](https://gitlab.dylanw.dev/uploads/-/system/group/avatar/14/dmarc-analyser-256px.png?width=96)
 
-# DMARC Analyser
+# DMARC Analyser Frontend
 
-An AWS Lambda-based DMARC report ingestion pipeline.
+[![Pipeline status](https://gitlab.dylanw.dev/dmarc-analyser/frontend/badges/main/pipeline.svg)](https://gitlab.dylanw.dev/dmarc-analyser/frontend/-/commits/main)
 
-## Frontend
+DMARC Analyser is an AWS Lambda-based DMARC report ingestion pipeline.  The frontend is a React app to display data 
+collected by DMARC Analyser, available at [dmarc.dylanw.net](https://dmarc.dylanw.net).
 
-[![pipeline status](https://gitlab.dylanw.dev/dmarc-analyser/frontend/badges/main/pipeline.svg)](https://gitlab.dylanw.dev/dmarc-analyser/frontend/-/commits/main)
+It allows for viewing the reports ingested and seeing a dashboard of the results over time.
 
-This is the code for the frontend of the application.  It's a simple React app that allows for viewing the reports 
-ingested and seeing a dashboard of the results over time.
-
-### Development
+## Development
 
 The following environment variables are required:
 
@@ -35,16 +33,18 @@ Then run the following commands to start the development server:
 npm run dev
 ```
 
-### Deployment
+## Deployment
 
-This is a GitLab Pages project.  The `main` branch is deployed to https://dmarc.dylanw.net.
+This is a GitLab Pages project.  It uses the `react-gitlab-pages-deploy` template from the 
+[react-deployment-base](https://gitlab.dylanw.dev/infrastructure/react-deployment-base) CI/CD component.  The `main` 
+branch is deployed to [dmarc.dylanw.net](https://dmarc.dylanw.net).
 
-### License
+## License
 
 This application is licensed under the GNU General Public License v3.0 or later.
 
 ```
-DMARC Analyser
+DMARC Analyser - A Lambda-based DMARC report ingestion pipeline.
 Copyright (C) 2026  Dylan Wilson
 
 This program is free software: you can redistribute it and/or modify
